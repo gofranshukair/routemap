@@ -54,10 +54,7 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
              var selectedAirport=scope.selectedAirport;
              
              if(selectedAirport){ 
-            var dataProvider={
-                map: "worldLow",
-                linkToObject: selectedAirport.name,
-                images: [{
+              var all_images=[{
                     id: selectedAirport.name,
                     color: "#000000",
                     svgPath: targetSVG,
@@ -84,7 +81,29 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
                       latitude: 50.8371,
                       longitude: 4.3676
                     }
-                  ]
+                  ];
+             
+              
+              for(var index in selectedAirportRoutes){
+                var route_item=selectedAirportRoutes[index];
+                var line={
+                  latitudes: [selectedAirport.latitude, route_item.latitude],
+                  longitudes: [selectedAirport.longitude, route_item.longitude]
+                }
+                all_images[0].lines.push(line);
+                var image={
+                    svgPath: targetSVG,
+                    title: route_item.name,
+                    latitude: route_item.latitude,
+                    longitude: route_item.longitude
+                  }
+                 all_images.push(image); 
+              }
+
+              var dataProvider={
+                map: "worldLow",
+                linkToObject: selectedAirport.name,
+                images: all_images
             };
 
             map.dataProvider=dataProvider;
