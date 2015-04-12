@@ -22,6 +22,25 @@ angular.module('routemapApp').factory('Ryanair', function ($http) {
       },
       getAirportRoutes:function(){
        return routes;
+      },
+      getAirportRoutesByAirportIATACode:function(airport_iataCode){
+       var route_airports_array=[];
+       for(var index in routes){
+        var route=routes[index];
+        if(index==airport_iataCode){
+          for (var i in route){
+            var iataCode=route[i];
+            for(var j in airports){
+              var airport=airports[j];
+              if (airport.iataCode==iataCode) {
+                 route_airports_array.push(airport);
+              };
+            }
+          }
+          return route_airports_array;
+        }
+       } 
+       
       }
     };
   }

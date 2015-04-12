@@ -5,7 +5,15 @@ angular.module('routemapApp')
     
     $scope.airports = Ryanair.getAirports();
     $scope.selectedAirport = '';
-    
+    $scope.airportSelected=function(selectedAirport) {
+      $scope.selectedAirport = selectedAirport.originalObject;
+      if(selectedAirport.originalObject.iataCode){
+
+
+	  $scope.selectedAirportRoutes =Ryanair.getAirportRoutesByAirportIATACode($scope.selectedAirport.iataCode);
+	  
+	  }
+	}
 
 
   });
