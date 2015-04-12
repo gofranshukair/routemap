@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',function ($rootScope,$timeout) {
+angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout','Ryanair',function ($rootScope,$timeout,Ryanair) {
 
 
   return {
@@ -33,17 +33,20 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
             },
 
             imagesSettings: {
-              color: '#CC0000',
-              rollOverColor: '#CC0000',
+              color: '#22356b',
+              rollOverColor: '#22356b',
               selectedColor: '#000000'
             },
 
             linesSettings: {
-              color: '#CC0000',
+              color: '#22356b',
               alpha: 0.4
             },
 
-
+            zoomControl:{    
+              "zoomControlEnabled": true,
+              buttonColorHover:"#22356b",
+              buttonFillColor:"#22356b"  },
             backgroundZoomsToTop: true,
             linesAboveImages: true
           }); 
@@ -61,6 +64,7 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
                     title: selectedAirport.name,
                     latitude: selectedAirport.latitude,
                     longitude: selectedAirport.longitude,
+                    iataCode:selectedAirport.iataCode,
                     scale: 1.5,
                     zoomLevel: 2.74,
                     lines: [],
@@ -75,11 +79,6 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
                       labelRollOverColor: "#CC0000",
                       labelFontSize: 20
                     }]
-                    }, {
-                      svgPath: targetSVG,
-                      title: "Brussels",
-                      latitude: 50.8371,
-                      longitude: 4.3676
                     }
                   ];
              
@@ -92,10 +91,13 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
                 }
                 all_images[0].lines.push(line);
                 var image={
+                    id: route_item.name,
                     svgPath: targetSVG,
+                    iataCode:route_item.iataCode,
                     title: route_item.name,
                     latitude: route_item.latitude,
-                    longitude: route_item.longitude
+                    longitude: route_item.longitude,
+                    description:"<h1>hello</h1>",
                   }
                  all_images.push(image); 
               }
@@ -104,15 +106,25 @@ angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout',fun
                 map: "worldLow",
                 linkToObject: selectedAirport.name,
                 images: all_images
-            };
-
-            map.dataProvider=dataProvider;
-            map.validateData();
+                };
+                map.dataProvider=dataProvider;
+                map.validateData();
+             
+             
+           
           }
 
             });
      
-             
+             map.addListener("clickMapObject", function (event) {
+                if (event.mapObject.id != undefined) {
+                   console.log(event.mapObject);
+                   var selectedAirportItem=event.mapObject;
+                   scope.selectedAirport=Ryanair.getAirportByIATACode(selectedAirportItem.iataCode);
+                   scope.selectedAirportRoutes=Ryanair.getAirportRoutesByAirportIATACode(selectedAirportItem.iataCode);
+                   scope.$apply();
+                }
+            });
 
     }
    }

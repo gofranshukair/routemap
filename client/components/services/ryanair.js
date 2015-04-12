@@ -18,7 +18,15 @@ angular.module('routemapApp').factory('Ryanair', function ($http) {
           airports = data;
       },
       getAirports: function () {
-          return airports;//.getSomeData();
+          return airports;
+      },
+      getAirportByIATACode: function (airport_iataCode) {
+          for(var j in airports){
+              var airport=airports[j];
+              if (airport.iataCode==airport_iataCode) {
+                 return airport;
+              };
+            }
       },
       getAirportRoutes:function(){
        return routes;
