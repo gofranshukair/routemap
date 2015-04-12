@@ -3,22 +3,44 @@
 
 
 <div class="container">
-	<div class="row">
+	<div class="row ">
 		<div class="col-lg-12">
-			<angucomplete-alt id="ex1"
-              placeholder="Search Airports"
-              pause="100"
-              selected-object="airportSelected"
-              local-data="airports"
-              search-fields="name"
-              title-field="name"
-              minlength="1"
-              input-class="form-control form-control-small"/>
+			<div class="panel panel-primary">
+				<div class="panel-body">
+					Welcome to Routes Map of RyanAir, you can click at any of our European Airports to see the avialalbe routes, Alternativly you can search using airport name or its IATA code.
+
+				</div>
+			</div>
 		</div>
 	</div>	
 	<div class="row">
+		
+			
 		<div class="col-lg-12">
-			<world-map selected-airport="selectedAirport" selected-airport-routes="selectedAirportRoutes"></world-map>
+			
+			<button type="button" class="btn btn-link pull-right" ng-click="showAll()">{{modeText}}</button><h4>Search Airports :</h4>
+		</div>
+	</div>	
+	<div class="row">
+		
+			
+		<div class="col-lg-12">		
+			<angucomplete-alt id="ex1"
+			placeholder="Enter Airport Name or IATA Code"
+			pause="100"
+			selected-object="airportSelected"
+			local-data="airports"
+			search-fields="name,iataCode"
+			title-field="name"
+			minlength="1"
+			matchclass="highlight"
+			input-class="form-control form-control-small"/>
+		</div>
+	</div>	
+	<hr>
+	<div class="row">
+		<div class="col-lg-12">
+			<world-map selected-airport="selectedAirport" selected-airport-routes="selectedAirportRoutes" mode="mode"></world-map>
 		</div>
 	</div>
 </div>
