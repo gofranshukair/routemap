@@ -7,6 +7,7 @@ angular.module('routemapApp')
     $scope.selectedAirport = '';
     $scope.mode="ALL_AIRPORTS";
     $scope.modeText="Hide All Airports";
+    
     $scope.airportSelected=function(selectedAirport) {
       $scope.selectedAirport = selectedAirport.originalObject;
       if(selectedAirport.originalObject.iataCode){

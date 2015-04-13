@@ -1,5 +1,16 @@
 'use strict';
 
+
+/* 
+/ This is amCharts World Map directive 
+/ amCharts is an advanced charting library that will suit any data visualization need.  
+/ http://www.amcharts.com/
+/ the directive has three paramters :
+/ selectedAirport : the selected airport from the search textbox
+/ selectedAirportRoutes : the available routes 
+/ mode : the mode to show the map, either display the all teh airport or search for a certain one. 
+*/
+
 angular.module('routemapApp').directive('worldMap', ['$rootScope','$timeout','Ryanair',function ($rootScope,$timeout,Ryanair) {
 
 
